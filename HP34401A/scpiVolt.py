@@ -2,7 +2,7 @@ import serial
 import time
 
 # Open the COM port
-ser = serial.Serial('COM1', 9600)
+ser = serial.Serial('COM4', 9600)
 #ser.write(b'\n')
 #ser.flush()
 #time.sleep(1)

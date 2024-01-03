@@ -2,7 +2,7 @@ import serial
 import time
 
 # Open the COM port
-ser = serial.Serial('COM1', 9600)
+ser = serial.Serial('COM4', 9600)
 ser.write(b'\n')
 ser.flush()
 time.sleep(1)
@@ -15,7 +15,7 @@ ser.write(b'*CLS\n')
 ser.flush()
 print('Clearing the device...')
 time.sleep(1)
-ser.timeout = 5000
+#ser.timeout = 5000
 
 #ser.write(b'*RST;*CLS\n')
 # Create a loop
