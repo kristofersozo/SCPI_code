@@ -1,57 +1,52 @@
-import serial
-import time
+import serial	# pakete priekš komunikācijas ar virknes interfeisu
+import time	# pakete priekš ar laiku saistītām operācijām
 
-# Open the COM port
-ser = serial.Serial('COM4', 9600)
-#ser.write(b'\n')
-#ser.flush()
-#time.sleep(1)
-#ser.read_all()
-#ser.write(b'*RST\n')
-#ser.flush()
+ser = serial.Serial('COM4', 9600)	# atver komunikācijas portu
+#ser.write(b'\n')	# izveido jaunu rindu, lai pārliecinātos, ka visi neapstiprinātie dati ir notīrīti
+#ser.flush()	# iztīra izejas buferi, lai pārliecinātos, ka dati ir nosūtīti
+#time.sleep(1)	# nogaida 1 sekundi
+#ser.read_all()	# nolasa visus pieejamos datus no bufera
+#ser.write(b'*RST\n')	# nosūta "reset" komandu
+#ser.flush()	# iztīra izejas buferi, lai pārliecinātos, ka dati ir nosūtīti
 #print('Resetting the device...')
-#time.sleep(1)
-#ser.write(b'*CLS\n')
-#ser.flush()
+#time.sleep(1)	# nogaida 1 sekundi
+#ser.write(b'*CLS\n')	# nosūta komandu, kas iztīra ierīci
+#ser.flush()	# iztīra izejas buferi, lai pārliecinātos, ka dati ir nosūtīti
 #print('Clearing the device...')
-#time.sleep(1)
-#ser.timeout = 5000
+#time.sleep(1)	# nogaida 1 sekundi
+#ser.timeout = 5000	# virknes interfeisa komunikācijas pārtraukums milisekundēs
 
-#ser.write(b'*RST;*CLS\n')
-# Create a loop
-ser.write(b'SYST:REM\n')
+#ser.write(b'*RST;*CLS\n')	# vienlaicīgu nosūta "reset" un komandu, kas iztīra ierīci
+# izveido atkārtojošos cilpu
+ser.write(b'SYST:REM\n')	# SCPI komanda, kas barošanai ieslēdz tālvadības režīmu
 time.sleep(1)
-ser.write(b'CONF:VOLT:AC\n')	# AC vai DC
-time.sleep(1)
-while True:
-	 # Send the "*IDN?" command
+ser.write(b'CONF:VOLT:AC\n')	# AC vai DC	# SCPI komanda, kas konfigurē ierīci priekš maiņsprieguma mērīšanas
+time.sleep(1)	# nogaida 1 sekundi
+while True:	# izveido atkārtojošos cilpu
+	 # nosūta "*IDN?" komandu, lai noteiktu ierīces identifikāciju
 #	ser.write(b'*IDN?\n')
-	ser.write(b'READ?\n')
+	ser.write(b'READ?\n')	# SCPI komanda, kas nolasa izmērītos datus
 
-	ser.flush()
+	ser.flush()	# iztīra izejas buferi, lai pārliecinātos, ka dati ir nosūtīti
 
-	time.sleep(1)
+	time.sleep(1)	# nogaida 1 sekundi
 
 
 	print('Sending the "*IDN?" command...')
 
- 	# Read the response
-	response = ser.readline()
+	response = ser.readline()	# nolasa atbildi
 
-# 	# Print the response
 	print(response)
 
-# 	# Sleep for 1 second
-	time.sleep(1)
+	time.sleep(1)	# nogaida 1 sekundi
 
-ser.timeout = 1000
-while 1:
-	time.sleep(3)
+ser.timeout = 1000	# taimauts virknes komunikācijai
+while 1:	# izveido atkārtojošos cilpu
+	time.sleep(3)	# nogaida 3 sekundes
 	print('lol')
-	ser.read_all()
-	time.sleep(1)
+	ser.read_all()	# nolasa visus pieejamos datus no bufera
+	time.sleep(1)	# nogaida 1 sekundi
 	print('writing')
-	ser.write(b'*IDN?\n')
+	ser.write(b'*IDN?\n')	# nosūta "*IDN?" komandu, lai noteiktu ierīces identifikāciju
 
-# Close the COM port
-ser.close()
+ser.close()	# aizver komunikācijas portu
